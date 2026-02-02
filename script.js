@@ -1,0 +1,2 @@
+AOS.init({ duration: 1000, once: true });
+new Typed(".typed", { strings: ["Backend Development", "DevOps & Cloud Specialist", "Networks • Automation • Montage"], typeSpeed: 60, backSpeed: 40, loop: true });

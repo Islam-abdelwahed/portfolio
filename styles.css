@@ -1,0 +1,186 @@
+:root {
+    --primary: #ff4d4d;
+    --dark: #000000;
+    --gray: #111111;
+    --light: #ffffff;
+    --bs-primary: #ff4d4d;
+    --bs-primary-rgb: 255, 77, 77;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--dark);
+    color: var(--light);
+    overflow-x: hidden;
+}
+
+.nav-link {
+    color: var(--light) !important;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--primary) !important;
+}
+
+.nav-btn {
+    background: var(--primary);
+    color: #000;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.nav-btn:hover {
+    background: #ff3333;
+}
+
+.hero {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+}
+
+.hero-photo-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 100%;
+    background: url('./assets/formal.png') right center / cover no-repeat;
+    clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 55%;
+    text-align: left;
+}
+
+.hero-content a{
+     background-color: #ff4d4d;
+}
+
+.hero-subtitle {
+    font-size: 1.4rem;
+    color: var(--primary);
+    margin-bottom: 10px;
+    letter-spacing: 4px;
+}
+
+.hero-separator {
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin: 0 0 20px;
+}
+
+h1 {
+    font-size: 6rem;
+    margin: 0 0 30px;
+    line-height: 1;
+    font-weight: bold;
+}
+
+.typed {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 50px;
+}
+
+.btn {
+    padding: 18px 50px;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: all 0.3s;
+    box-shadow: 0 5px 20px rgba(255, 77, 77, 0.4);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+.experience-section {
+    background: var(--gray);
+    padding: 120px 0;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.experience-section h2 {
+    font-size: 4rem;
+    margin-bottom: 30px;
+}
+
+.quote {
+    font-size: 1.6rem;
+    max-width: 800px;
+    margin: auto;
+    font-style: italic;
+}
+
+.author {
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin-top: 20px;
+}
+
+.skill-card {
+    background: var(--gray);
+    border-radius: 16px;
+    transition: all 0.4s;
+    border: 1px solid rgba(255, 77, 77, 0.2);
+}
+
+.skill-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(255, 77, 77, 0.3);
+}
+
+.skill-icon {
+    font-size: 4rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+footer {
+    background: var(--gray);
+    position: relative;
+    z-index: 2;
+}
+
+@media (max-width: 992px) {
+    .hero-photo-bg {
+        width: 100%;
+        right: auto;
+        left: 0;
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 20% 100%);
+    }
+
+    .hero-content {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 4.5rem;
+    }
+}
+
+.social-links div a {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    margin: 0 15px;
+    font-size: 1.5rem;
+    text-decoration: none;
+    line-height: 1.6;
+}
+.social-links a:hover { color: var(--primary); }
