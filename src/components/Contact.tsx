@@ -34,7 +34,7 @@ const Contact: React.FC = () => {
                 <li key={idx}>
                   <i className={info.icon}></i>
                   <a href={info.href} className="contact__link" aria-label={info.label} target={info.target} rel={info.rel}>
-                    {info.text}
+                    {info.label}
                   </a>
                 </li>
               ))}
