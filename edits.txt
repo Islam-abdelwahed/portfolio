@@ -1,0 +1,7 @@
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    #particles-js { position: fixed; top:0; left:0; width:100%; height:100%; z-index: -1; }
+  <script>
+    particlesJS("particles-js", { particles: { number: { value: 90, density: { enable: true, value_area: 800 } }, color: { value: "#00f0ff" }, shape: { type: "circle" }, opacity: { value: 0.6, random: true }, size: { value: 4, random: true }, line_linked: { enable: true, distance: 150, color: "#ff00aa", opacity: 0.4, width: 1 }, move: { enable: true, speed: 2.5, direction: "none", random: true, straight: false, out_mode: "out" } }, interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } } }, retina_detect: true });
+    AOS.init({ duration: 1200, once: true });
+    new Typed(".typed", { strings: ["Backend & DevOps Engineer", "Node.js • .NET • Cloud Specialist", "Networks • Automation • Montage"], typeSpeed: 60, backSpeed: 40, loop: true });
+  </script>
