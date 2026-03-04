@@ -45,26 +45,26 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#0B0C10] text-[#C5C6C7] font-['Outfit',sans-serif] relative overflow-hidden">
-      <NeuralBackground />
-      <div className="fixed inset-0 z-[-2] pointer-events-none overflow-hidden back-light">
-        <div className="absolute w-[60vmax] h-[60vmax] rounded-full blur-[100px] opacity-28 bg-[radial-gradient(circle,rgba(102,252,241,0.4)_0%,transparent_70%)] -top-[20%] -left-[10%] animate-[backLightMove1_25s_ease-in-out_infinite]" />
-        <div className="absolute w-[50vmax] h-[50vmax] rounded-full blur-[100px] opacity-28 bg-[radial-gradient(circle,rgba(102,252,241,0.3)_0%,transparent_65%)] top-[40%] -right-[15%] animate-[backLightMove2_30s_ease-in-out_infinite] animation-delay-[-5s]" />
-        <div className="absolute w-[45vmax] h-[45vmax] rounded-full blur-[100px] opacity-28 bg-[radial-gradient(circle,rgba(69,162,158,0.35)_0%,transparent_70%)] -bottom-[15%] left-[20%] animate-[backLightMove3_28s_ease-in-out_infinite] animation-delay-[-10s]" />
-        <div className="absolute w-[35vmax] h-[35vmax] rounded-full blur-[100px] opacity-28 bg-[radial-gradient(circle,rgba(102,252,241,0.25)_0%,transparent_65%)] top-[60%] -left-[5%] animate-[backLightMove4_22s_ease-in-out_infinite] animation-delay-[-15s]" />
-        <div className="absolute w-[40vmax] h-[40vmax] rounded-full blur-[100px] opacity-28 bg-[radial-gradient(circle,rgba(102,252,241,0.2)_0%,transparent_70%)] top-[10%] right-[30%] animate-[backLightMove5_26s_ease-in-out_infinite] animation-delay-[-8s]" />
-        <div className="absolute w-[55vmax] h-[55vmax] rounded-full blur-[100px] opacity-28 bg-[radial-gradient(circle,rgba(102,252,241,0.28)_0%,transparent_68%)] -bottom-[25%] right-[10%] animate-[backLightMove6_27s_ease-in-out_infinite] animation-delay-[-12s]" />
-        <div className="absolute w-[38vmax] h-[38vmax] rounded-full blur-[100px] opacity-28 bg-[radial-gradient(circle,rgba(69,162,158,0.3)_0%,transparent_65%)] top-[30%] left-[35%] animate-[backLightMove7_24s_ease-in-out_infinite] animation-delay-[-7s]" />
+    <div className="app-shell">
+      
+      <div className="back-light">
+        <div className="back-light__blob back-light__blob--1" />
+        <div className="back-light__blob back-light__blob--2" />
+        <div className="back-light__blob back-light__blob--3" />
+        <div className="back-light__blob back-light__blob--4" />
+        <div className="back-light__blob back-light__blob--5" />
+        <div className="back-light__blob back-light__blob--6" />
+        <div className="back-light__blob back-light__blob--7" />
       </div>
-      <header className={`fixed top-0 left-0 right-0 z-[1000] h-[70px] w-full bg-[rgba(11,12,16,0.9)] backdrop-blur-md border-b border-[--border-dark] transition-all duration-[--transition-smooth] ${isScrolled ? 'scrolled' : ''}`} id="header">
-        <nav className="w-full h-full px-6 sm:px-8 lg:px-12 flex items-center justify-between">
+      <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`} id="header">
+        <nav className="nav__bar">
           <a href="#home" className="nav__logo">
             <span className="nav__logo-text">IE .</span>
           </a>
-          <button className="nav__toggle md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button className="nav__toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <i className={isMenuOpen ? 'fas fa-times' : 'fas fa-bars'}></i>
           </button>
-          <ul className="nav__menu hidden md:flex items-center gap-6 lg:gap-8">
+          <ul className="nav__menu nav__menu--desktop">
             {sections.map((section) => (
               <li key={section}>
                 <a href={`#${section}`} className={`nav__link ${activeSection === section ? 'active' : ''}`}>
@@ -75,10 +75,10 @@ const App: React.FC = () => {
           </ul>
         </nav>
         {isMenuOpen && (
-          <ul className="nav__menu nav__menu--mobile md:hidden w-full px-6 sm:px-8 lg:px-12">
+          <ul className="nav__menu nav__menu--mobile">
             {sections.map((section) => (
               <li key={section}>
-                <a href={`#${section}`} className="nav__link block" onClick={() => setIsMenuOpen(false)}>
+                <a href={`#${section}`} className="nav__link nav__link--mobile" onClick={() => setIsMenuOpen(false)}>
                   {section.charAt(0).toUpperCase() + section.slice(1).replace('-', ' ')}
                 </a>
               </li>
@@ -92,15 +92,15 @@ const App: React.FC = () => {
         <Education />
         <SoftSkills />
         <Skills />
-        <Projects />
+        {/* <Projects /> */}
         <Ratings />
-        <Services />
+        <Services />/
         <Achievements />
-        <Certificates />
+        <Certificates /> 
         <Contact />
       </main>
-      <footer className="footer border-t border-[--border-dark] text-center">
-        <div className="container p-6">
+      <footer className="footer">
+        <div className="container footer__inner">
           <p className="footer__text">&copy; {year} Islam Elsayed Mohamed. All rights reserved.</p>
         </div>
       </footer>

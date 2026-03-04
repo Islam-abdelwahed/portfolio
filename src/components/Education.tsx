@@ -5,6 +5,42 @@ const Education: React.FC = () => {
   const education = siteContent.education
   const work = siteContent.work
 
+  const timelineEvents = [
+    {
+      year: '2020',
+      title: 'Web Automation & Gaming Services',
+      description: 'Full-stack web automation and gaming services',
+      institution: 'Freelance',
+      date: 'Jul 2020 - Oct 2023',
+      type: 'work',
+      isMajor: true
+    },
+    {
+      year: '2021',
+      title: 'Bachelor of Computer Science',
+      description: education.subtitle,
+      institution: education.place,
+      date: 'Sep 2021 - Jul 2025',
+      type: 'education',
+      isMajor: true
+    },
+    {
+      year: '2023',
+      title: null,
+      type: 'milestone',
+      isMajor: false
+    },
+    {
+      year: '2025',
+      title: 'NTI Upskilling for Machine Learning',
+      description: 'Advanced Machine Learning and AI techniques',
+      institution: 'National Telecommunication Institute',
+      date: 'Oct 2025 - Dec 2025',
+      type: 'education',
+      isMajor: true
+    }
+  ]
+
   return (
     <section id="education" className="section education">
       <div className="container">
@@ -12,16 +48,16 @@ const Education: React.FC = () => {
         <div className="education__layout">
           <aside className="edu-summary" data-animate>
             <div className="edu-summary__card" data-animate>
-              <h3 className="edu-summary__title">Work Experience</h3>
+              <h3 className="edu-summary__title">WORK EXPERIENCE</h3>
               <ul className="edu-summary__list">
                 <li>
                   <span className="edu-summary__item-title">{work.title}</span>
-                  <span className="edu-summary__item-meta">{work.range}</span>
+                  <span className="edu-summary__item-meta">Jul 2020 - Oct 2023</span>
                 </li>
               </ul>
             </div>
             <div className="edu-summary__card" data-animate>
-              <h3 className="edu-summary__title">Education & Courses</h3>
+              <h3 className="edu-summary__title">EDUCATION & COURSES</h3>
               <ul className="edu-summary__list">
                 <li>
                   <span className="edu-summary__item-title">{education.title}</span>
@@ -39,71 +75,34 @@ const Education: React.FC = () => {
               </ul>
             </div>
           </aside>
-          <div className="timeline timeline--range timeline--center" data-animate>
-            <div className="timeline__line" />
-            <article className="timeline__item" data-start="2021-09" data-end="2025-07" data-type="education">
-              <div className="timeline__start" tabIndex={0}>
-                <span className="timeline__marker timeline__marker--start" aria-hidden="true" />
-                <span className="timeline__year timeline__year--start">2021</span>
-                <span className="timeline__start-label">Bachelor of Computer Science</span>
-                <span className="timeline__connector" aria-hidden="true" />
-                <div className="timeline__card" role="group" aria-label="Bachelor of Computer Science details">
-                  <div className="timeline__icon"><i className="fas fa-graduation-cap"></i></div>
-                  <h3 className="timeline__title">{education.title}</h3>
-                  <p className="timeline__subtitle">{education.subtitle}</p>
-                  <p className="timeline__place">{education.place}</p>
-                  <p className="timeline__date"><i className="fas fa-calendar"></i> {education.range}</p>
-                </div>
+          <div className="timeline-vertical" data-animate>
+            <div className="timeline-vertical__line" />
+            {timelineEvents.map((event, index) => (
+              <div key={index} className="timeline-vertical__item">
+                <div className="timeline-vertical__year">{event.year}</div>
+                <div className={`timeline-vertical__dot ${event.isMajor ? 'timeline-vertical__dot--major' : 'timeline-vertical__dot--minor'}`} />
+                {event.title && (
+                  <>
+                    <div className="timeline-vertical__connector" />
+                    <div className="timeline-vertical__hover-target">
+                      <div className="timeline-vertical__point" />
+                      <div className="timeline-vertical__card">
+                        <h4 className="timeline-vertical__card-title">{event.title}</h4>
+                        <p className="timeline-vertical__card-description">{event.description}</p>
+                        {event.institution && (
+                          <p className="timeline-vertical__card-meta">
+                            <i className="fas fa-building"></i> {event.institution}
+                          </p>
+                        )}
+                        <p className="timeline-vertical__card-meta">
+                          <i className="fas fa-calendar"></i> {event.date}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
-              <span className="timeline__segment" aria-hidden="true" />
-              <div className="timeline__end" tabIndex={0}>
-                <span className="timeline__marker timeline__marker--end" aria-hidden="true" title="Bachelor of Computer Science" />
-                <span className="timeline__year timeline__year--end">2025</span>
-                <span className="timeline__end-tooltip">Bachelor of Computer Science</span>
-              </div>
-            </article>
-            <article className="timeline__item" data-start="2024-10" data-end="2025-02" data-type="education">
-              <div className="timeline__start" tabIndex={0}>
-                <span className="timeline__marker timeline__marker--start" aria-hidden="true" />
-                <span className="timeline__year timeline__year--start">2024</span>
-                <span className="timeline__start-label">NTI ML & AI</span>
-                <span className="timeline__connector" aria-hidden="true" />
-                <div className="timeline__card" role="group">
-                  <div className="timeline__icon"><i className="fas fa-brain"></i></div>
-                  <h3 className="timeline__title">NTI Machine Learning & AI</h3>
-                  <p className="timeline__subtitle">Advanced ML and Deep Learning</p>
-                  <p className="timeline__place">National Telecommunication Institute</p>
-                  <p className="timeline__date"><i className="fas fa-calendar"></i> Oct 2024 - Feb 2026</p>
-                </div>
-              </div>
-              <span className="timeline__segment" aria-hidden="true" />
-              <div className="timeline__end" tabIndex={0}>
-                <span className="timeline__marker timeline__marker--end" aria-hidden="true" title="NTI ML & AI" />
-                <span className="timeline__year timeline__year--end">2026</span>
-                <span className="timeline__end-tooltip">NTI ML & AI</span>
-              </div>
-            </article>
-            <article className="timeline__item" data-start="2024-10" data-end="2024-12" data-type="work">
-              <div className="timeline__start" tabIndex={0}>
-                <span className="timeline__marker timeline__marker--start" aria-hidden="true" />
-                <span className="timeline__year timeline__year--start">2024</span>
-                <span className="timeline__start-label">{work.title}</span>
-                <span className="timeline__connector" aria-hidden="true" />
-                <div className="timeline__card" role="group">
-                  <div className="timeline__icon"><i className="fas fa-briefcase"></i></div>
-                  <h3 className="timeline__title">{work.title}</h3>
-                  <p className="timeline__subtitle">{work.subtitle}</p>
-                  <p className="timeline__place">{work.place}</p>
-                  <p className="timeline__date"><i className="fas fa-calendar"></i> {work.range}</p>
-                </div>
-              </div>
-              <span className="timeline__segment" aria-hidden="true" />
-              <div className="timeline__end" tabIndex={0}>
-                <span className="timeline__marker timeline__marker--end" aria-hidden="true" title={work.title} />
-                <span className="timeline__year timeline__year--end">Now</span>
-                <span className="timeline__end-tooltip">{work.title}</span>
-              </div>
-            </article>
+            ))}
           </div>
         </div>
       </div>

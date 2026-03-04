@@ -10,7 +10,7 @@ const About: React.FC = () => {
         <h2 className="section__title" data-animate>About Me</h2>
         <div className="about__grid">
           <div className="about__image-wrap" id="about-photo-wrap" data-animate>
-            <img src="src\assets\formal.jpg" alt="About" className="about__image photo-transition-img" id="about-photo" />
+            <img src="images/formal.jpg" alt="About" className="about__image photo-transition-img" id="about-photo" />
           </div>
           <div className="about__content about__content--fade" data-animate>
             <p className="about__text">{about.paragraph}</p>

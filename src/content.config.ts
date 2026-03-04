@@ -80,6 +80,14 @@ interface SiteContent {
     images: string[];
   }[];
 
+  certificates: {
+    title: string;
+    org: string;
+    url: string;
+    embedUrl: string;
+    thumbnail?: string;
+  }[];
+
   education: {
     title: string;
     subtitle: string;
@@ -245,7 +253,7 @@ const siteContent: SiteContent = {
       description:
         "Distributed real-time surveillance system with AI-powered edge devices and scalable backend processing.",
       stack: ["Node.js", "TypeScript", "MongoDB", "Redis", "BullMQ"],
-      image: "src/assets/img2.jpg",
+      image: "images/img2.jpg",
       imageAlt: "AI Surveillance System",
       demoLink: "",
       githubRepo: ""
@@ -255,7 +263,7 @@ const siteContent: SiteContent = {
       description:
         "Secure microservices-based digital wallet with Kafka event-driven architecture and ledger accounting.",
       stack: ["NestJS", "PostgreSQL", "Kafka", "Redis", "gRPC"],
-      image: "src/assets/img.jpg",
+      image: "images/img.jpg",
       imageAlt: "Fintech Wallet Backend",
       demoLink: "",
       githubRepo: ""
@@ -265,7 +273,7 @@ const siteContent: SiteContent = {
       description:
         "Secure messaging system implementing X3DH, Double Ratchet, and HSM-based key management.",
       stack: ["NestJS", "Node.js Crypto", "WebSockets"],
-      image: "src/assets/img3.png",
+      image: "images/img3.png",
       imageAlt: "Encrypted Messaging System",
       demoLink: "",
       githubRepo: ""
@@ -350,9 +358,9 @@ const siteContent: SiteContent = {
       highlight: "Global Hackathon",
       icon: "🚀",
       images: [
-        "/src/assets/nasa1.png",
-        "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1454789476662-53eb23ba5907?auto=format&fit=crop&w=800&q=80"
+        "images/nasa1.png",
+        "images/nasa.jpg",
+        "images/nasa2.jpg"
       ]
     },
     {
@@ -376,6 +384,51 @@ const siteContent: SiteContent = {
         "https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=800&q=80",
         "https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=800&q=80"
       ]
+    }
+  ],
+
+  certificates: [
+    {
+      title: "Python Essentials 1 & 2",
+      org: "Cisco",
+      url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
+      embedUrl: "/docs/Cer-55.pdf",
+      thumbnail: "/docs/Cer-55.pdf"
+    },
+    {
+      title: "Data Analytics Essentials",
+      org: "Cisco",
+      url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
+      embedUrl: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
+      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      title: "Machine Learning",
+      org: "NTI",
+      url: "https://www.nti.gov.eg/",
+      embedUrl: "https://www.nti.gov.eg/",
+      thumbnail: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      title: "Deep Learning & Computer Vision",
+      org: "NTI",
+      url: "https://www.nti.gov.eg/",
+      embedUrl: "https://www.nti.gov.eg/",
+      thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      title: "Innovegypt Program",
+      org: "ITIDA",
+      url: "https://www.itida.gov.eg/",
+      embedUrl: "https://www.itida.gov.eg/",
+      thumbnail: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      title: "Algorithm Analysis & Design",
+      org: "Udemy",
+      url: "https://www.udemy.com/",
+      embedUrl: "https://www.udemy.com/",
+      thumbnail: "https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=800&q=80"
     }
   ],
 
