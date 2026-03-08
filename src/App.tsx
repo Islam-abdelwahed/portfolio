@@ -6,14 +6,14 @@ import Education from './components/Education' // Uncommented this
 import SoftSkills from './components/SoftSkills'
 import Skills from './components/Skills'
 import Achievements from './components/Achievements'
-// import Projects from './components/Projects'
+import Projects from './components/Projects'
 // import Ratings from './components/Ratings'
 import Services from './components/Services'
 import Certificates from './components/Certificates'
 import Contact from './components/Contact'
 import siteContent from './content.config'
 
-const sections = ['home', 'about', 'education', 'soft-skills', 'skills', /*'projects', /*'ratings',*/ 'services', 'achievements', 'certificates', 'contact']
+const sections = ['home', 'about', 'education', /*'soft-skills',*/ 'skills', 'projects', /*'ratings',*/ 'services', 'achievements', 'certificates', 'contact']
 
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -141,9 +141,9 @@ const App: React.FC = () => {
         <Hero />
         <About />
         <Education />
-        <SoftSkills />
+        {/* <SoftSkills /> */}
         <Skills />
-        {/* <Projects /> */}
+        <Projects />
         {/* <Ratings /> */}
         <Services />
         <Achievements />

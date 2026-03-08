@@ -9,10 +9,10 @@ interface SocialLink {
 }
 
 interface SiteContent {
-  floatingIcons: {
-    safePositions: { x: number; y: number }[];
-    icons: { name: string; className: string; color: string }[];
-  };
+  // floatingIcons: {
+  //   safePositions: { x: number; y: number }[];
+  //   icons: { name: string; className: string; color: string }[];
+  // };
 
   hero: {
     greeting: string;
@@ -46,7 +46,8 @@ interface SiteContent {
     imageAlt: string;
     demoLink: string;
     githubRepo: string;
-  }[];
+    category: string;
+  }[]; // Note: Projects are fetched from API, these are fallback values
 
   experience: { title: string; description: string }[];
 
@@ -175,28 +176,6 @@ const socialLinks = {
 /* ============================= */
 
 const siteContent: SiteContent = {
-  floatingIcons: {
-    safePositions: [
-      { x: 12, y: 14 },
-      { x: 88, y: 14 },
-      { x: 10, y: 32 },
-      { x: 90, y: 34 },
-      { x: 12, y: 72 },
-      { x: 88, y: 70 },
-      { x: 18, y: 88 },
-      { x: 82, y: 88 }
-    ],
-    icons: [
-      { name: "Node.js", className: "fab fa-node", color: "#68A063" },
-      { name: "TypeScript", className: "devicon-typescript-plain", color: "#3178C6" },
-      { name: "MongoDB", className: "devicon-mongodb-plain", color: "#47A248" },
-      { name: "PostgreSQL", className: "devicon-postgresql-plain", color: "#336791" },
-      { name: "Docker", className: "fab fa-docker", color: "#2496ED" },
-      { name: "Redis", className: "devicon-redis-plain", color: "#DC382D" },
-      { name: "GitHub", className: "fab fa-github", color: "#FFFFFF" },
-      { name: "Git", className: "fab fa-git-alt", color: "#F05133" }
-    ]
-  },
 
   hero: {
     greeting: "Hello, I'm",
@@ -286,7 +265,7 @@ const siteContent: SiteContent = {
   },
 
   projects: [
-    {
+     {
       title: "Video Analysis & Management System",
       description:
         "Distributed real-time surveillance system with AI-powered edge devices and scalable backend processing.",
@@ -294,28 +273,9 @@ const siteContent: SiteContent = {
       image: "images/img2.jpg",
       imageAlt: "AI Surveillance System",
       demoLink: "",
-      githubRepo: ""
+      githubRepo: "",
+      category: "Backend"
     },
-    {
-      title: "FinTech Wallet & Transaction System",
-      description:
-        "Secure microservices-based digital wallet with Kafka event-driven architecture and ledger accounting.",
-      stack: ["NestJS", "PostgreSQL", "Kafka", "Redis", "gRPC"],
-      image: "images/img.jpg",
-      imageAlt: "Fintech Wallet Backend",
-      demoLink: "",
-      githubRepo: ""
-    },
-    {
-      title: "End-to-End Encrypted Messaging Platform",
-      description:
-        "Secure messaging system implementing X3DH, Double Ratchet, and HSM-based key management.",
-      stack: ["NestJS", "Node.js Crypto", "WebSockets"],
-      image: "images/img3.png",
-      imageAlt: "Encrypted Messaging System",
-      demoLink: "",
-      githubRepo: ""
-    }
   ],
 
   experience: [
@@ -437,78 +397,6 @@ const siteContent: SiteContent = {
       thumbnail: "https://drive.google.com/thumbnail?id=1uzXQJ4RcBzd6Y4PNeCGHhDAngxaB1jBH&sz=w200",
       date: "15/08/2023"
     },
-    {
-      title: "Data Analytics Essentials",
-      org: "Cisco",
-      url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
-      embedUrl: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
-      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-      date: "22/09/2023"
-    },
-    {
-      title: "Data Analytics Essentials",
-      org: "Cisco",
-      url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
-      embedUrl: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
-      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-      date: "22/09/2023"
-    },
-    {
-      title: "Data Analytics Essentials",
-      org: "Cisco",
-      url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
-      embedUrl: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
-      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-      date: "22/09/2023"
-    },
-    {
-      title: "Data Analytics Essentials",
-      org: "Cisco",
-      url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
-      embedUrl: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
-      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-      date: "22/09/2023"
-    },
-    {
-      title: "Data Analytics Essentials",
-      org: "Cisco",
-      url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
-      embedUrl: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
-      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-      date: "22/09/2023"
-    },
-    {
-      title: "Machine Learning",
-      org: "NTI",
-      url: "https://www.nti.gov.eg/",
-      embedUrl: "https://www.nti.gov.eg/",
-      thumbnail: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=800&q=80",
-      date: "10/12/2023"
-    },
-    {
-      title: "Deep Learning & Computer Vision",
-      org: "NTI",
-      url: "https://www.nti.gov.eg/",
-      embedUrl: "https://www.nti.gov.eg/",
-      thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
-      date: "05/02/2024"
-    },
-    {
-      title: "Innovegypt Program",
-      org: "ITIDA",
-      url: "https://www.itida.gov.eg/",
-      embedUrl: "https://www.itida.gov.eg/",
-      thumbnail: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
-      date: "18/06/2024"
-    },
-    {
-      title: "Algorithm Analysis & Design",
-      org: "Udemy",
-      url: "https://www.udemy.com/",
-      embedUrl: "https://www.udemy.com/",
-      thumbnail: "https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=800&q=80",
-      date: "30/09/2024"
-    }
   ],
 
   contact: {
