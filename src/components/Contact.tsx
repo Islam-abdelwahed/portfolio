@@ -15,6 +15,20 @@ const Contact: React.FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
+  const getIconClass = (iconName: string): string => {
+    const iconMap: Record<string, string> = {
+      'phone': 'fas fa-phone',
+      'mail': 'fas fa-envelope',
+      'linkedin': 'fab fa-linkedin-in',
+      'github': 'fab fa-github',
+      'download': 'fas fa-download',
+      'briefcase': 'fas fa-briefcase',
+      'id-card': 'fas fa-id-card',
+      'user-tie': 'fas fa-user-tie'
+    }
+    return iconMap[iconName] || 'fas fa-link'
+  }
+
   return (
     <section id="contact" className="section contact">
       <div className="contact__bg">
@@ -26,13 +40,10 @@ const Contact: React.FC = () => {
         <h2 className="section__title" data-animate>Contact</h2>
         <div className="contact__grid">
           <div className="contact__info" data-animate>
-            <a href={`mailto:${contact.email}`} className="contact__cta-btn btn btn--primary">
-              <i className="fas fa-envelope"></i> {contact.ctaText}
-            </a>
             <ul className="contact__list">
               {contact.info.map((info, idx) => (
                 <li key={idx}>
-                  <i className={info.icon}></i>
+                  <i className={getIconClass(info.icon)}></i>
                   <a href={info.href} className="contact__link" aria-label={info.label} target={info.target} rel={info.rel}>
                     {info.label}
                   </a>

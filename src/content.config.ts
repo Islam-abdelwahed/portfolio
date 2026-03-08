@@ -86,16 +86,19 @@ interface SiteContent {
     url: string;
     embedUrl: string;
     thumbnail?: string;
-  }[];
+    date?: string;
+  }[]; // Note: Certificates are fetched from API, these are fallback values
 
   education: {
+    startDate: string; // Format: "YYYY-MM"
+    endDate: string; // Format: "YYYY-MM"
+    type: 'education' | 'work' | 'training';
     title: string;
-    subtitle: string;
-    place: string;
-    range: string;
-    startYear: string;
-    endYear: string;
-  };
+    subtitle?: string;
+    place?: string;
+    dateRange: string;
+    icon: string;
+  }[];
 
   contact: {
     ctaText: string;
@@ -111,22 +114,9 @@ interface SiteContent {
 /* ============================= */
 
 const socialLinks = {
-  github: {
-    label: "GitHub",
-    href: "https://github.com/Islam-abdelwahed",
-    icon: "github",
-    target: "_blank",
-    rel: "noopener noreferrer"
-  },
-  linkedin: {
-    label: "LinkedIn",
-    href: "https://linkedin.com/in/islamelsayed0",
-    icon: "linkedin",
-    target: "_blank",
-    rel: "noopener noreferrer"
-  },
   email: {
     label: "Email",
+    email: "islamabdelwahed61@gmail.com",
     href: "mailto:islamabdelwahed61@gmail.com",
     icon: "mail"
   },
@@ -140,6 +130,41 @@ const socialLinks = {
     text: "Download CV",
     href: "https://drive.google.com/file/d/11I3ZKVltsDL3gPJljb2nq9hae5QyEOC_/view?usp=sharing",
     icon: "download",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  },
+  linkedin: {
+    label: "LinkedIn",
+    href: "https://linkedin.com/in/islamelsayed0",
+    icon: "linkedin",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  },
+  github: {
+    label: "GitHub",
+    href: "https://github.com/Islam-abdelwahed",
+    icon: "github",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  },
+  upwork: {
+    label: "Upwork",
+    href: "https://www.upwork.com/freelancers/~01b2a478d4b0aceee6",
+    icon: "briefcase",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  },
+  wuzzuf: {
+    label: "Wuzzuf",
+    href: "https://wuzzuf.net/me/islam-elsayed",
+    icon: "id-card",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  },
+  mostaql: {
+    label: "Mostaql",
+    href: "https://mostaql.com/u/IslamAbdelwahed",
+    icon: "user-tie",
     target: "_blank",
     rel: "noopener noreferrer"
   }
@@ -189,7 +214,6 @@ const siteContent: SiteContent = {
     social: [
       socialLinks.github,
       socialLinks.linkedin,
-      socialLinks.email,
       socialLinks.phone
     ],
 
@@ -210,6 +234,20 @@ const siteContent: SiteContent = {
       { text: "IoT & AI Integration", icon: "cpu" }
     ]
   },
+
+  education: [
+    {
+      startDate: '2021-09',
+      endDate: '2025-07',
+      type: 'education',
+      title: "Bachelor of Computer Science (with Honors)",
+      subtitle: "Computer Science Department, Faculty of Computers and Informatics",
+      place: "Zagazig University",
+      dateRange: "Sep 2021 - Jul 2025",
+      icon: 'fas fa-graduation-cap'
+    },
+
+  ],
 
   skills: {
     categories: [
@@ -354,7 +392,7 @@ const siteContent: SiteContent = {
     {
       title: "NASA Space Apps",
       description: "Built and presented a space-tech solution as part of the global NASA Space Apps challenge.",
-      date: "Winner / Participant",
+      date: "2024",
       highlight: "Global Hackathon",
       icon: "🚀",
       images: [
@@ -370,19 +408,19 @@ const siteContent: SiteContent = {
       highlight: "Innovation",
       icon: "🏅",
       images: [
-        "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80"
+        "images/mie1.jpg",
+        "images/mie2.jpg"
       ]
     },
     {
-      title: "Open-Source Contributor",
-      description: "Shipped meaningful PRs to community projects, focusing on backend reliability and DX.",
-      date: "Ongoing",
-      highlight: "Community",
-      icon: "🌐",
+      title: "Rally Egypt 2024",
+      description: "Reach the semi finals with Safe-steer start-up",
+      date: "2024",
+      highlight: "Entrepreneur",
+      icon: "💵",
       images: [
-        "https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=800&q=80"
+        "images/rally1.jpg",
+        "images/rally2.jpg"
       ]
     }
   ],
@@ -391,66 +429,99 @@ const siteContent: SiteContent = {
     {
       title: "Python Essentials 1 & 2",
       org: "Cisco",
-      url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
-      embedUrl: "/docs/Cer-55.pdf",
-      thumbnail: "/docs/Cer-55.pdf"
+      // Link to view the certificate (opens in new tab)
+      url: "https://drive.google.com/file/d/1uzXQJ4RcBzd6Y4PNeCGHhDAngxaB1jBH/view",
+      // For embedding or direct PDF link
+      embedUrl: "https://drive.google.com/file/d/1uzXQJ4RcBzd6Y4PNeCGHhDAngxaB1jBH/preview",
+      // Thumbnail generated by Google Drive
+      thumbnail: "https://drive.google.com/thumbnail?id=1uzXQJ4RcBzd6Y4PNeCGHhDAngxaB1jBH&sz=w200",
+      date: "15/08/2023"
     },
     {
       title: "Data Analytics Essentials",
       org: "Cisco",
       url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
       embedUrl: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
-      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+      date: "22/09/2023"
+    },
+    {
+      title: "Data Analytics Essentials",
+      org: "Cisco",
+      url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
+      embedUrl: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
+      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+      date: "22/09/2023"
+    },
+    {
+      title: "Data Analytics Essentials",
+      org: "Cisco",
+      url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
+      embedUrl: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
+      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+      date: "22/09/2023"
+    },
+    {
+      title: "Data Analytics Essentials",
+      org: "Cisco",
+      url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
+      embedUrl: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
+      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+      date: "22/09/2023"
+    },
+    {
+      title: "Data Analytics Essentials",
+      org: "Cisco",
+      url: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
+      embedUrl: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications.html",
+      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+      date: "22/09/2023"
     },
     {
       title: "Machine Learning",
       org: "NTI",
       url: "https://www.nti.gov.eg/",
       embedUrl: "https://www.nti.gov.eg/",
-      thumbnail: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=800&q=80"
+      thumbnail: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=800&q=80",
+      date: "10/12/2023"
     },
     {
       title: "Deep Learning & Computer Vision",
       org: "NTI",
       url: "https://www.nti.gov.eg/",
       embedUrl: "https://www.nti.gov.eg/",
-      thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80"
+      thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
+      date: "05/02/2024"
     },
     {
       title: "Innovegypt Program",
       org: "ITIDA",
       url: "https://www.itida.gov.eg/",
       embedUrl: "https://www.itida.gov.eg/",
-      thumbnail: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80"
+      thumbnail: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      date: "18/06/2024"
     },
     {
       title: "Algorithm Analysis & Design",
       org: "Udemy",
       url: "https://www.udemy.com/",
       embedUrl: "https://www.udemy.com/",
-      thumbnail: "https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=800&q=80"
+      thumbnail: "https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=800&q=80",
+      date: "30/09/2024"
     }
   ],
 
-  education: {
-    title: "Bachelor of Computer Science (with Honors)",
-    subtitle:
-      "Computer Science Department, Faculty of Computers and Informatics",
-    place: "Zagazig University",
-    range: "Sep 2021 - Jul 2025",
-    startYear: "2021",
-    endYear: "2025"
-  },
-
   contact: {
     ctaText: "Contact Me",
-    email: "islamabdelwahed61@gmail.com",
+    email: socialLinks.email.email,
     info: [
       socialLinks.phone,
       socialLinks.email,
       socialLinks.linkedin,
       socialLinks.github,
-      socialLinks.cv
+      socialLinks.upwork,
+      socialLinks.wuzzuf,
+      socialLinks.mostaql,
     ],
     formLabels: {
       name: "Name",

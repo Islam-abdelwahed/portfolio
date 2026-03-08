@@ -3,15 +3,27 @@ import siteContent from '../content.config'
 
 const Achievements: React.FC = () => {
   const achievements = siteContent.achievements || []
+  const [currentIndex, setCurrentIndex] = useState(0)
   const [currentSlides, setCurrentSlides] = useState<number[]>(() => achievements.map(() => 0))
-  const [isPaused, setIsPaused] = useState<boolean[]>(() => achievements.map(() => false))
+  const [isPaused, setIsPaused] = useState(false)
+  const [isImagePaused, setIsImagePaused] = useState<boolean[]>(() => achievements.map(() => false))
 
   const safeAchievements = useMemo(
     () => achievements.map((a) => ({ ...a, images: a.images && a.images.length > 0 ? a.images : ['https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80'] })),
     [achievements]
   )
 
-  const handlePrev = useCallback((idx: number) => {
+  // Carousel navigation
+  const handlePrevCard = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + safeAchievements.length) % safeAchievements.length)
+  }, [safeAchievements.length])
+
+  const handleNextCard = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % safeAchievements.length)
+  }, [safeAchievements.length])
+
+  // Image slideshow within cards
+  const handlePrevImage = useCallback((idx: number) => {
     setCurrentSlides((prev) =>
       prev.map((val, i) => {
         if (i !== idx) return val
@@ -21,7 +33,7 @@ const Achievements: React.FC = () => {
     )
   }, [safeAchievements])
 
-  const handleNext = useCallback((idx: number) => {
+  const handleNextImage = useCallback((idx: number) => {
     setCurrentSlides((prev) =>
       prev.map((val, i) => {
         if (i !== idx) return val
@@ -37,15 +49,26 @@ const Achievements: React.FC = () => {
     )
   }, [])
 
-  // Autoplay functionality
+  // Auto-rotate carousel
+  useEffect(() => {
+    if (isPaused || safeAchievements.length <= 1) return
+
+    const interval = setInterval(() => {
+      handleNextCard()
+    }, 5000) // 5 seconds per card
+
+    return () => clearInterval(interval)
+  }, [isPaused, handleNextCard, safeAchievements.length])
+
+  // Auto-play images within cards
   useEffect(() => {
     const intervals: ReturnType<typeof setInterval>[] = []
 
     safeAchievements.forEach((achievement, idx) => {
-      if (achievement.images.length > 1 && !isPaused[idx]) {
+      if (achievement.images.length > 1 && !isImagePaused[idx] && idx === currentIndex) {
         const interval = setInterval(() => {
-          handleNext(idx)
-        }, 4000) // 4 seconds per slide
+          handleNextImage(idx)
+        }, 4000) // 4 seconds per image
         intervals.push(interval)
       }
     })
@@ -53,14 +76,22 @@ const Achievements: React.FC = () => {
     return () => {
       intervals.forEach((interval) => clearInterval(interval))
     }
-  }, [safeAchievements, isPaused, handleNext])
+  }, [safeAchievements, isImagePaused, handleNextImage, currentIndex])
 
-  const handleMouseEnter = (idx: number) => {
-    setIsPaused((prev) => prev.map((val, i) => (i === idx ? true : val)))
+  const handleMouseEnterCard = () => {
+    setIsPaused(true)
   }
 
-  const handleMouseLeave = (idx: number) => {
-    setIsPaused((prev) => prev.map((val, i) => (i === idx ? false : val)))
+  const handleMouseLeaveCard = () => {
+    setIsPaused(false)
+  }
+
+  const handleMouseEnterImage = (idx: number) => {
+    setIsImagePaused((prev) => prev.map((val, i) => (i === idx ? true : val)))
+  }
+
+  const handleMouseLeaveImage = (idx: number) => {
+    setIsImagePaused((prev) => prev.map((val, i) => (i === idx ? false : val)))
   }
 
   return (
@@ -71,98 +102,142 @@ const Achievements: React.FC = () => {
           Badges that capture wins, recognition, and impact.
         </p>
 
-        <div className="achievements__list" data-animate>
-          {safeAchievements.map((achievement, idx) => {
-            const current = currentSlides[idx] ?? 0
-            const total = achievement.images.length
-
-            return (
-              <article
-                key={idx}
-                className="achievement-card"
-                onMouseEnter={() => handleMouseEnter(idx)}
-                onMouseLeave={() => handleMouseLeave(idx)}
+        <div 
+          className="achievements__carousel" 
+          data-animate
+          onMouseEnter={handleMouseEnterCard}
+          onMouseLeave={handleMouseLeaveCard}
+        >
+          {safeAchievements.length > 1 && (
+            <>
+              <button
+                onClick={handlePrevCard}
+                className="achievements__nav-btn achievements__nav-btn--prev"
+                aria-label="Previous achievement"
               >
-                <div className="achievement-card__media">
-                  <img
-                    src={achievement.images[current]}
-                    alt={achievement.title}
-                    className="achievement-card__image"
-                    loading="lazy"
-                  />
+                <i className="fas fa-chevron-left"></i>
+              </button>
+              <button
+                onClick={handleNextCard}
+                className="achievements__nav-btn achievements__nav-btn--next"
+                aria-label="Next achievement"
+              >
+                <i className="fas fa-chevron-right"></i>
+              </button>
+            </>
+          )}
 
-                  {achievement.highlight && (
-                    <div className="achievement-card__badge">
-                      <span>{achievement.highlight}</span>
-                    </div>
-                  )}
+          <div className="achievements__track">
+            {safeAchievements.map((achievement, idx) => {
+              const current = currentSlides[idx] ?? 0
+              const total = achievement.images.length
+              const offset = idx - currentIndex
+              const isActive = idx === currentIndex
 
-                  {total > 1 && (
-                    <>
-                      <div className="achievement-card__controls">
-                        <button
-                          onClick={() => handlePrev(idx)}
-                          className="achievement-card__nav-btn"
-                          aria-label="Previous image"
-                        >
-                          ‹
-                        </button>
-                        <button
-                          onClick={() => handleNext(idx)}
-                          className="achievement-card__nav-btn"
-                          aria-label="Next image"
-                        >
-                          ›
-                        </button>
+              return (
+                <article
+                  key={idx}
+                  className={`achievement-card ${isActive ? 'achievement-card--active' : ''}`}
+                  style={{
+                    transform: `translateX(calc(${offset * 100}% + ${offset * 3}rem))`,
+                  }}
+                  onMouseEnter={() => handleMouseEnterImage(idx)}
+                  onMouseLeave={() => handleMouseLeaveImage(idx)}
+                >
+                  <div className="achievement-card__media">
+                    <img
+                      src={achievement.images[current]}
+                      alt={achievement.title}
+                      className="achievement-card__image"
+                      loading="lazy"
+                    />
+
+                    {achievement.highlight && (
+                      <div className="achievement-card__badge">
+                        <span>{achievement.highlight}</span>
                       </div>
+                    )}
 
-                      <div className="achievement-card__dots">
-                        {achievement.images.map((_, dotIdx) => (
+                    {total > 1 && isActive && (
+                      <>
+                        <div className="achievement-card__controls">
                           <button
-                            key={dotIdx}
-                            onClick={() => goToSlide(idx, dotIdx)}
-                            className={`achievement-card__dot ${dotIdx === current ? 'achievement-card__dot--active' : ''}`}
-                            aria-label={`Go to slide ${dotIdx + 1}`}
-                          />
-                        ))}
-                      </div>
-                    </>
-                  )}
+                            onClick={() => handlePrevImage(idx)}
+                            className="achievement-card__nav-btn"
+                            aria-label="Previous image"
+                          >
+                            ‹
+                          </button>
+                          <button
+                            onClick={() => handleNextImage(idx)}
+                            className="achievement-card__nav-btn"
+                            aria-label="Next image"
+                          >
+                            ›
+                          </button>
+                        </div>
 
-                  <div className="achievement-card__text-overlay">
-                    <div className="achievement-card__text-blur" />
-                    <div className="achievement-card__text-content">
-                      <div className="achievement-card__text-row">
-                        <div className="achievement-card__icon">
+                        <div className="achievement-card__dots">
+                          {achievement.images.map((_, dotIdx) => (
+                            <button
+                              key={dotIdx}
+                              onClick={() => goToSlide(idx, dotIdx)}
+                              className={`achievement-card__dot ${dotIdx === current ? 'achievement-card__dot--active' : ''}`}
+                              aria-label={`Go to slide ${dotIdx + 1}`}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    )}
+
+                    <div className="achievement-card__text-overlay">
+                      <div className="achievement-card__text-blur" />
+                      <div className="achievement-card__text-content">
+                        <div className="achievement-card__text-row">
+                          <div className="achievement-card__icon">
+                            <span aria-hidden="true">{achievement.icon ?? '⭐'}</span>
+                          </div>
+                          <div className="achievement-card__titles">
+                            <h3>{achievement.title}</h3>
+                            {achievement.date && (
+                              <p className="achievement-card__date">{achievement.date}</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="achievement-card__description">
+                      <div className="achievement-card__description-content">
+                        <div className="achievement-card__description-icon">
                           <span aria-hidden="true">{achievement.icon ?? '⭐'}</span>
                         </div>
-                        <div className="achievement-card__titles">
-                          <h3>{achievement.title}</h3>
-                          {achievement.date && (
-                            <p className="achievement-card__date">{achievement.date}</p>
-                          )}
-                        </div>
+                        <h3>{achievement.title}</h3>
+                        {achievement.date && <p className="achievement-card__date">{achievement.date}</p>}
+                        <p className="achievement-card__description-text">{achievement.description}</p>
+                        {achievement.highlight && (
+                          <div className="achievement-card__highlight">{achievement.highlight}</div>
+                        )}
                       </div>
                     </div>
                   </div>
+                </article>
+              )
+            })}
+          </div>
 
-                  <div className="achievement-card__description">
-                    <div className="achievement-card__description-content">
-                      <div className="achievement-card__description-icon">
-                        <span aria-hidden="true">{achievement.icon ?? '⭐'}</span>
-                      </div>
-                      <h3>{achievement.title}</h3>
-                      {achievement.date && <p className="achievement-card__date">{achievement.date}</p>}
-                      <p className="achievement-card__description-text">{achievement.description}</p>
-                      {achievement.highlight && (
-                        <div className="achievement-card__highlight">{achievement.highlight}</div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </article>
-            )
-          })}
+          {safeAchievements.length > 1 && (
+            <div className="achievements__indicators">
+              {safeAchievements.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`achievements__indicator ${idx === currentIndex ? 'achievements__indicator--active' : ''}`}
+                  aria-label={`Go to achievement ${idx + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>

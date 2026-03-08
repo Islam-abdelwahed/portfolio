@@ -1,25 +1,41 @@
 // src/App.tsx
-import { useEffect, useState } from 'react'
-import NeuralBackground from './components/NeuralBackground'
+import { useEffect, useState, useRef } from 'react'
 import Hero from './components/Hero'
 import About from './components/About'
 import Education from './components/Education' // Uncommented this
 import SoftSkills from './components/SoftSkills'
 import Skills from './components/Skills'
 import Achievements from './components/Achievements'
-import Projects from './components/Projects'
-import Ratings from './components/Ratings'
+// import Projects from './components/Projects'
+// import Ratings from './components/Ratings'
 import Services from './components/Services'
 import Certificates from './components/Certificates'
 import Contact from './components/Contact'
+import siteContent from './content.config'
 
-const sections = ['home', 'about', 'education', 'soft-skills', 'skills', 'projects', 'ratings', 'services', 'achievements', 'certificates', 'contact']
+const sections = ['home', 'about', 'education', 'soft-skills', 'skills', /*'projects', /*'ratings',*/ 'services', 'achievements', 'certificates', 'contact']
 
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [isScrolled, setIsScrolled] = useState(false) // New state for scrolled
   const [year, setYear] = useState(new Date().getFullYear())
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 })
+  const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([])
+
+  const getIconClass = (iconName: string): string => {
+    const iconMap: Record<string, string> = {
+      'phone': 'fas fa-phone',
+      'mail': 'fas fa-envelope',
+      'linkedin': 'fab fa-linkedin-in',
+      'github': 'fab fa-github',
+      'download': 'fas fa-download',
+      'briefcase': 'fas fa-briefcase',
+      'id-card': 'fas fa-id-card',
+      'user-tie': 'fas fa-user-tie'
+    }
+    return iconMap[iconName] || 'fas fa-link'
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +60,30 @@ const App: React.FC = () => {
     setYear(new Date().getFullYear())
   }, [])
 
+  // Update indicator position when active section changes
+  useEffect(() => {
+    const updateIndicator = () => {
+      const activeIndex = sections.indexOf(activeSection)
+      const activeLink = navLinksRef.current[activeIndex]
+      
+      if (activeLink) {
+        const navMenu = activeLink.parentElement?.parentElement
+        if (navMenu) {
+          const menuRect = navMenu.getBoundingClientRect()
+          const linkRect = activeLink.getBoundingClientRect()
+          setIndicatorStyle({
+            left: linkRect.left - menuRect.left,
+            width: linkRect.width
+          })
+        }
+      }
+    }
+
+    updateIndicator()
+    window.addEventListener('resize', updateIndicator)
+    return () => window.removeEventListener('resize', updateIndicator)
+  }, [activeSection])
+
   return (
     <div className="app-shell">
       
@@ -65,13 +105,24 @@ const App: React.FC = () => {
             <i className={isMenuOpen ? 'fas fa-times' : 'fas fa-bars'}></i>
           </button>
           <ul className="nav__menu nav__menu--desktop">
-            {sections.map((section) => (
+            {sections.map((section, index) => (
               <li key={section}>
-                <a href={`#${section}`} className={`nav__link ${activeSection === section ? 'active' : ''}`}>
+                <a 
+                  href={`#${section}`} 
+                  className={`nav__link ${activeSection === section ? 'active' : ''}`}
+                  ref={(el) => { navLinksRef.current[index] = el }}
+                >
                   {section.charAt(0).toUpperCase() + section.slice(1).replace('-', ' ')}
                 </a>
               </li>
             ))}
+            <div 
+              className="nav__indicator" 
+              style={{
+                transform: `translateX(${indicatorStyle.left}px)`,
+                width: `${indicatorStyle.width}px`
+              }}
+            />
           </ul>
         </nav>
         {isMenuOpen && (
@@ -93,14 +144,35 @@ const App: React.FC = () => {
         <SoftSkills />
         <Skills />
         {/* <Projects /> */}
-        <Ratings />
-        <Services />/
+        {/* <Ratings /> */}
+        <Services />
         <Achievements />
         <Certificates /> 
         <Contact />
       </main>
       <footer className="footer">
         <div className="container footer__inner">
+          <div className="footer__social">
+            {siteContent.contact.info.map((social, idx) => (
+              <a 
+                key={idx}
+                href={social.href} 
+                target={social.target} 
+                rel={social.rel} 
+                className="footer__social-link" 
+                aria-label={social.label}
+              >
+                <i className={getIconClass(social.icon)}></i>
+              </a>
+            ))}
+          </div>
+          <button 
+            className="footer__scroll-top"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="Scroll to top"
+          >
+            <i className="fas fa-arrow-up"></i>
+          </button>
           <p className="footer__text">&copy; {year} Islam Elsayed Mohamed. All rights reserved.</p>
         </div>
       </footer>
