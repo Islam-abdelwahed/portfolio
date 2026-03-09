@@ -2,15 +2,58 @@ import React, { useMemo, useState, useEffect, useCallback } from 'react'
 import siteContent from '../content.config'
 
 const Achievements: React.FC = () => {
-  const achievements = siteContent.achievements || []
+  const [achievementsData, setAchievementsData] = useState(siteContent.achievements || [])
+  const [loading, setLoading] = useState(true)
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [currentSlides, setCurrentSlides] = useState<number[]>(() => achievements.map(() => 0))
+  const [currentSlides, setCurrentSlides] = useState<number[]>([])
   const [isPaused, setIsPaused] = useState(false)
-  const [isImagePaused, setIsImagePaused] = useState<boolean[]>(() => achievements.map(() => false))
+  const [isImagePaused, setIsImagePaused] = useState<boolean[]>([])
+
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      try {
+        const response = await fetch(
+          'https://script.google.com/macros/s/AKfycbyWKX5DuMMS-Na_ZNwzC3gydeLy60WQNgiK-e8baQbRGvnXUdgWQpc_yQyiMtlbK_lP/exec'
+        )
+        const data = await response.json()
+
+        // Clean image URLs and convert Drive URLs to thumbnail format
+        const convertDriveUrl = (url: string) => {
+          const trimmed = url.trim()
+          const match = trimmed.match(/[?&]id=([^&]+)/) || trimmed.match(/\/d\/([^\/]+)/)
+          if (match && match[1]) {
+            return `https://drive.google.com/thumbnail?id=${match[1].trim()}&sz=w800`
+          }
+          return trimmed
+        }
+
+        // Clean image URLs (trim spaces from IDs) and normalize data
+        const formatted = data.map((a: any) => ({
+          ...a,
+          date: a.date ? String(a.date) : undefined,
+          images: Array.isArray(a.images)
+            ? a.images.map((url: string) => convertDriveUrl(url)).filter(Boolean)
+            : []
+        }))
+
+        setAchievementsData(formatted)
+        setCurrentSlides(formatted.map(() => 0))
+        setIsImagePaused(formatted.map(() => false))
+      } catch (error) {
+        console.error('Failed to fetch achievements, using fallback data:', error)
+        setCurrentSlides(siteContent.achievements.map(() => 0))
+        setIsImagePaused(siteContent.achievements.map(() => false))
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchAchievements()
+  }, [])
 
   const safeAchievements = useMemo(
-    () => achievements.map((a) => ({ ...a, images: a.images && a.images.length > 0 ? a.images : ['https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80'] })),
-    [achievements]
+    () => achievementsData.map((a) => ({ ...a, images: a.images && a.images.length > 0 ? a.images : ['https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80'] })),
+    [achievementsData]
   )
 
   // Carousel navigation
@@ -102,6 +145,12 @@ const Achievements: React.FC = () => {
           Badges that capture wins, recognition, and impact.
         </p>
 
+        {loading ? (
+          <div className="projects__loading">
+            <i className="fas fa-spinner fa-spin"></i>
+            <p>Loading achievements...</p>
+          </div>
+        ) : (
         <div 
           className="achievements__carousel" 
           data-animate
@@ -239,6 +288,7 @@ const Achievements: React.FC = () => {
             </div>
           )}
         </div>
+        )}
       </div>
     </section>
   )

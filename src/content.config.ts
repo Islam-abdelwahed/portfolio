@@ -168,6 +168,13 @@ const socialLinks = {
     icon: "user-tie",
     target: "_blank",
     rel: "noopener noreferrer"
+  },
+  khamsat: {
+    label: "Mostaql",
+    href: "https://khamsat.com/user/islam_abdelwahed",
+    icon: "user-tie",
+    target: "_blank",
+    rel: "noopener noreferrer"
   }
 };
 
@@ -361,28 +368,7 @@ const siteContent: SiteContent = {
         "images/nasa2.jpg"
       ]
     },
-    {
-      title: "MIE Award",
-      description: "Recognized for innovation and impact in education technology and mentorship.",
-      date: "2025",
-      highlight: "Innovation",
-      icon: "🏅",
-      images: [
-        "images/mie1.jpg",
-        "images/mie2.jpg"
-      ]
-    },
-    {
-      title: "Rally Egypt 2024",
-      description: "Reach the semi finals with Safe-steer start-up",
-      date: "2024",
-      highlight: "Entrepreneur",
-      icon: "💵",
-      images: [
-        "images/rally1.jpg",
-        "images/rally2.jpg"
-      ]
-    }
+
   ],
 
   certificates: [
@@ -410,6 +396,7 @@ const siteContent: SiteContent = {
       socialLinks.upwork,
       socialLinks.wuzzuf,
       socialLinks.mostaql,
+      socialLinks.khamsat
     ],
     formLabels: {
       name: "Name",

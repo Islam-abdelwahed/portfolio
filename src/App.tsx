@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react'
 import Hero from './components/Hero'
 import About from './components/About'
 import Education from './components/Education' // Uncommented this
-import SoftSkills from './components/SoftSkills'
+// import SoftSkills from './components/SoftSkills'
 import Skills from './components/Skills'
 import Achievements from './components/Achievements'
 import Projects from './components/Projects'
