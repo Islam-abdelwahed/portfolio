@@ -6,6 +6,13 @@ const Services: React.FC = () => {
 
   return (
     <section id="services" className="section services">
+      {/* Floating decorative elements */}
+      <div className="floating-decor">
+        <div className="float-el float-el--circle float-el--1"></div>
+        <div className="float-el float-el--square float-el--2"></div>
+        <div className="float-el float-el--orb float-el--orb-1"></div>
+        <div className="float-el float-el--orb float-el--orb-2"></div>
+      </div>
       <div className="container">
         <h2 className="section__title" data-animate>Services</h2>
         <div className="services__grid">

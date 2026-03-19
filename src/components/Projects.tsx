@@ -1,6 +1,6 @@
 // src/components/Projects.tsx
 import { useState, useEffect } from 'react'
-import siteContent from '../content.config'
+import siteContent, { ApiLink } from '../content.config'
 
 interface Project {
   title: string
@@ -25,7 +25,7 @@ const Projects: React.FC = () => {
     const fetchProjects = async () => {
       try {
         const response = await fetch(
-          'https://script.google.com/macros/s/AKfycbylIdIabBUD-y9jt5WFUj1MM5DZjb2HozcmMZtWquwSLtrQowkZrONZgh-8HB8fpCCZ/exec'
+           `${ApiLink}?endpoint=projects`
         )
         const data = await response.json()
         
@@ -107,6 +107,14 @@ const Projects: React.FC = () => {
 
   return (
     <section id="projects" className="section projects">
+      {/* Floating decorative elements */}
+      <div className="floating-decor">
+        <span className="float-el float-el--code float-el--code-1">&lt;/&gt;</span>
+        <span className="float-el float-el--code float-el--code-2">&#123; &#125;</span>
+        <span className="float-el float-el--code float-el--code-3">#</span>
+        <div className="float-el float-el--orb float-el--orb-1"></div>
+        <div className="float-el float-el--orb float-el--orb-2"></div>
+      </div>
       <div className="container">
         <h2 className="section__title" data-animate>Projects</h2>
         
@@ -135,12 +143,25 @@ const Projects: React.FC = () => {
                     <span>Image unavailable</span>
                   </div>
                 ) : (
-                  <img 
-                    src={project.image} 
-                    alt={project.imageAlt} 
+                  <img
+                    src={project.image}
+                    alt={project.imageAlt}
                     className="project-card__image"
                     onError={() => handleImageError(idx)}
                   />
+                )}
+
+                {/* Circular GitHub Button */}
+                {project.githubRepo && (
+                  <a
+                    href={project.githubRepo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-card__github-btn"
+                    aria-label="View code on GitHub"
+                  >
+                    <i className="fab fa-github"></i>
+                  </a>
                 )}
               </div>
 
@@ -148,7 +169,7 @@ const Projects: React.FC = () => {
               <div className="project-card__content">
                 <h3 className="project-card__title">{project.title}</h3>
                 <p className="project-card__desc">{project.description}</p>
-                
+
                 {/* Technology Tags */}
                 <div className="project-card__tags">
                   {project.stack.map((tech, techIdx) => (
@@ -158,22 +179,11 @@ const Projects: React.FC = () => {
 
                 {/* Action Buttons */}
                 <div className="project-card__actions">
-                  {project.githubRepo && (
-                    <a 
-                      href={project.githubRepo} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="project-btn project-btn--code"
-                    >
-                      <i className="fab fa-github"></i>
-                      Code
-                    </a>
-                  )}
                   {project.demoLink && (
-                    <a 
-                      href={project.demoLink} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+                    <a
+                      href={project.demoLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="project-btn project-btn--demo"
                     >
                       <i className="fas fa-external-link-alt"></i>

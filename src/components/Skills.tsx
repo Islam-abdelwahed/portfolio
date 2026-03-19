@@ -6,6 +6,14 @@ const Skills: React.FC = () => {
 
   return (
     <section id="skills" className="section skills">
+      {/* Floating decorative elements */}
+      <div className="floating-decor">
+        <div className="float-el float-el--square float-el--1"></div>
+        <div className="float-el float-el--circle float-el--2"></div>
+        <div className="float-el float-el--circle float-el--3"></div>
+        <div className="float-el float-el--orb float-el--4"></div>
+        <div className="float-el float-el--orb float-el--5"></div>
+      </div>
       <div className="container">
         <h2 className="section__title" data-animate>Skills & Tools</h2>
         <div className="skills__grid">

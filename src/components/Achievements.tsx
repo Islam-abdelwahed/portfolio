@@ -1,6 +1,5 @@
 import React, { useMemo, useState, useEffect, useCallback } from 'react'
-import siteContent from '../content.config'
-
+import siteContent, { ApiLink } from '../content.config'
 const Achievements: React.FC = () => {
   const [achievementsData, setAchievementsData] = useState(siteContent.achievements || [])
   const [loading, setLoading] = useState(true)
@@ -13,7 +12,7 @@ const Achievements: React.FC = () => {
     const fetchAchievements = async () => {
       try {
         const response = await fetch(
-          'https://script.google.com/macros/s/AKfycbyWKX5DuMMS-Na_ZNwzC3gydeLy60WQNgiK-e8baQbRGvnXUdgWQpc_yQyiMtlbK_lP/exec'
+          `${ApiLink}?endpoint=achievements`
         )
         const data = await response.json()
 

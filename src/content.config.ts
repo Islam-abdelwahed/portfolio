@@ -170,9 +170,9 @@ const socialLinks = {
     rel: "noopener noreferrer"
   },
   khamsat: {
-    label: "Mostaql",
+    label: "Khamsat",
     href: "https://khamsat.com/user/islam_abdelwahed",
-    icon: "user-tie",
+    icon: "five",
     target: "_blank",
     rel: "noopener noreferrer"
   }
@@ -364,7 +364,17 @@ const siteContent: SiteContent = {
       icon: "🚀",
       images: [
         "images/nasa1.png",
-        "images/nasa.jpg",
+        "images/nasa2.jpg"
+      ]
+    },
+    {
+      title: "NASA Space Apps",
+      description: "Built and presented a space-tech solution as part of the global NASA Space Apps challenge.",
+      date: "2024",
+      highlight: "Global Hackathon",
+      icon: "🚀",
+      images: [
+        "images/nasa1.png",
         "images/nasa2.jpg"
       ]
     },
@@ -409,3 +419,5 @@ const siteContent: SiteContent = {
 };
 
 export default siteContent;
+
+export const ApiLink = "https://script.google.com/macros/s/AKfycbwFpRN1Nkqutm3OpcoK-bt8hfozT-f5tFJaNIO5DomzdxGzGHOc1FKVz2-5qtBYbOs/exec";

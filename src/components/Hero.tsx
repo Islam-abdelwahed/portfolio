@@ -1,6 +1,7 @@
 // src/components/Hero.tsx
 import { useEffect, useState, useRef } from 'react'
 import siteContent from '../content.config'
+import NeuralBackground from './NeuralBackground'
 
 const Hero: React.FC = () => {
   const hero = siteContent.hero
@@ -61,6 +62,7 @@ const Hero: React.FC = () => {
 
   return (
     <section id="home" className="hero">
+      <NeuralBackground />
       <div className="hero__bg">
         <div id="particles" className="hero__particles" />
         <div className="hero__shape-3d hero__shape-3d--1" aria-hidden="true" />

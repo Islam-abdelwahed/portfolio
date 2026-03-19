@@ -21,7 +21,10 @@ const App: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false) // New state for scrolled
   const [year, setYear] = useState(new Date().getFullYear())
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 })
+  const [showScrollTop, setShowScrollTop] = useState(false)
+  const [scrollTopInFooter, setScrollTopInFooter] = useState(false)
   const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([])
+  const footerRef = useRef<HTMLElement>(null)
 
   const getIconClass = (iconName: string): string => {
     const iconMap: Record<string, string> = {
@@ -42,6 +45,17 @@ const App: React.FC = () => {
       const scrollY = window.scrollY
       setIsScrolled(scrollY > 50) // Add 'scrolled' if scrolled past 50px (match original)
 
+      // Show scroll-to-top button after scrolling 300px
+      setShowScrollTop(scrollY > 300)
+
+      // Check if scroll button should be in footer
+      if (footerRef.current) {
+        const footerRect = footerRef.current.getBoundingClientRect()
+        const windowHeight = window.innerHeight
+        // If footer is visible in viewport
+        setScrollTopInFooter(footerRect.top < windowHeight)
+      }
+
       sections.forEach((section) => {
         const el = document.getElementById(section)
         if (el) {
@@ -60,12 +74,57 @@ const App: React.FC = () => {
     setYear(new Date().getFullYear())
   }, [])
 
+  // Scroll reveal animation observer
+  useEffect(() => {
+    const observeElements = () => {
+      const animatedElements = document.querySelectorAll('[data-animate]:not(.visible)')
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible')
+              observer.unobserve(entry.target)
+            }
+          })
+        },
+        {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        }
+      )
+
+      animatedElements.forEach((el) => observer.observe(el))
+
+      return observer
+    }
+
+    // Initial observation
+    const observer = observeElements()
+
+    // Re-observe when DOM changes (for dynamically loaded content)
+    const mutationObserver = new MutationObserver(() => {
+      const newElements = document.querySelectorAll('[data-animate]:not(.visible)')
+      newElements.forEach((el) => observer.observe(el))
+    })
+
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true
+    })
+
+    return () => {
+      observer.disconnect()
+      mutationObserver.disconnect()
+    }
+  }, [])
+
   // Update indicator position when active section changes
   useEffect(() => {
     const updateIndicator = () => {
       const activeIndex = sections.indexOf(activeSection)
       const activeLink = navLinksRef.current[activeIndex]
-      
+
       if (activeLink) {
         const navMenu = activeLink.parentElement?.parentElement
         if (navMenu) {
@@ -83,6 +142,10 @@ const App: React.FC = () => {
     window.addEventListener('resize', updateIndicator)
     return () => window.removeEventListener('resize', updateIndicator)
   }, [activeSection])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
     <div className="app-shell">
@@ -150,32 +213,34 @@ const App: React.FC = () => {
         <Certificates /> 
         <Contact />
       </main>
-      <footer className="footer">
+      <footer className="footer" ref={footerRef}>
         <div className="container footer__inner">
           <div className="footer__social">
             {siteContent.contact.info.map((social, idx) => (
-              <a 
+              <a
                 key={idx}
-                href={social.href} 
-                target={social.target} 
-                rel={social.rel} 
-                className="footer__social-link" 
+                href={social.href}
+                target={social.target}
+                rel={social.rel}
+                className="footer__social-link"
                 aria-label={social.label}
               >
                 <i className={getIconClass(social.icon)}></i>
               </a>
             ))}
           </div>
-          <button 
-            className="footer__scroll-top"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            aria-label="Scroll to top"
-          >
-            <i className="fas fa-arrow-up"></i>
-          </button>
           <p className="footer__text">&copy; {year} Islam Elsayed Mohamed. All rights reserved.</p>
         </div>
       </footer>
+
+      {/* Floating Scroll to Top Button */}
+      <button
+        className={`scroll-to-top ${showScrollTop ? 'scroll-to-top--visible' : ''} ${scrollTopInFooter ? 'scroll-to-top--in-footer' : ''}`}
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+      >
+        <i className="fas fa-arrow-up"></i>
+      </button>
     </div>
   )
 }
