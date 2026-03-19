@@ -277,12 +277,23 @@ const siteContent: SiteContent = {
       description:
         "Distributed real-time surveillance system with AI-powered edge devices and scalable backend processing.",
       stack: ["Node.js", "TypeScript", "MongoDB", "Redis", "BullMQ"],
-      image: "images/img2.jpg",
+      image: "images/project.jpg",
       imageAlt: "AI Surveillance System",
       demoLink: "",
       githubRepo: "",
       category: "Backend"
     },
+     {
+      title: "Video Analysis & Management System",
+      description:
+        "Distributed real-time surveillance system with AI-powered edge devices and scalable backend processing.",
+      stack: ["Node.js", "TypeScript", "MongoDB", "Redis", "BullMQ"],
+      image: "images/project.jpg",
+      imageAlt: "AI Surveillance System",
+      demoLink: "",
+      githubRepo: "",
+      category: "Backend"
+    }
   ],
 
   experience: [
@@ -363,8 +374,8 @@ const siteContent: SiteContent = {
       highlight: "Global Hackathon",
       icon: "🚀",
       images: [
-        "images/nasa1.png",
-        "images/nasa2.jpg"
+        "images/achievement.png",
+        "images/achievement.jpg"
       ]
     },
     {
@@ -374,8 +385,8 @@ const siteContent: SiteContent = {
       highlight: "Global Hackathon",
       icon: "🚀",
       images: [
-        "images/nasa1.png",
-        "images/nasa2.jpg"
+        "images/achievement.png",
+        "images/achievement.jpg"
       ]
     },
 
@@ -383,8 +394,8 @@ const siteContent: SiteContent = {
 
   certificates: [
     {
-      title: "Python Essentials 1 & 2",
-      org: "Cisco",
+      title: "Network",
+      org: "Mahara",
       // Link to view the certificate (opens in new tab)
       url: "https://drive.google.com/file/d/1uzXQJ4RcBzd6Y4PNeCGHhDAngxaB1jBH/view",
       // For embedding or direct PDF link
