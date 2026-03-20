@@ -1,6 +1,7 @@
 // src/components/Projects.tsx
 import { useState, useEffect } from 'react'
 import siteContent, { ApiLink } from '../content.config'
+import { useLoadingState } from '../contexts/LoadingContext'
 
 interface Project {
   title: string
@@ -20,21 +21,28 @@ const Projects: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({})
   const projectsPerPage = 3
+  const { startLoading, stopLoading } = useLoadingState('projects')
 
   useEffect(() => {
     const fetchProjects = async () => {
+      startLoading()
       try {
         const response = await fetch(
            `${ApiLink}?endpoint=projects`
         )
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
         const data = await response.json()
-        
+
         console.log('Fetched projects:', data) // Debug log
-        
+
         // Parse stack from string to array and process images
         const formattedData = data.map((project: any) => {
           let imageUrl = project.image || ''
-          
+
           // If it's a Google Drive URL, ensure it's in the right format
           if (imageUrl.includes('drive.google.com')) {
             // Extract file ID
@@ -45,19 +53,22 @@ const Projects: React.FC = () => {
               imageUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`
             }
           }
-          
+
           console.log('Processing project:', project.title, 'Image URL:', imageUrl)
-          
+
           return {
             ...project,
             image: imageUrl,
             stack: project.stack ? project.stack.split(',').map((s: string) => s.trim()).filter(Boolean) : []
           }
         })
-        
+
         setProjects(formattedData)
+        stopLoading()
       } catch (error) {
-        console.error('Failed to fetch projects, using fallback data:', error)
+        console.error('Failed to fetch projects:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Failed to load projects'
+        stopLoading(errorMessage)
         // Fallback to content.config data
         setProjects(siteContent.projects)
       } finally {

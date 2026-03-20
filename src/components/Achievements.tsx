@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useEffect, useCallback } from 'react'
 import siteContent, { ApiLink } from '../content.config'
+import { useLoadingState } from '../contexts/LoadingContext'
+
 const Achievements: React.FC = () => {
   const [achievementsData, setAchievementsData] = useState(siteContent.achievements || [])
   const [loading, setLoading] = useState(true)
@@ -7,13 +9,20 @@ const Achievements: React.FC = () => {
   const [currentSlides, setCurrentSlides] = useState<number[]>([])
   const [isPaused, setIsPaused] = useState(false)
   const [isImagePaused, setIsImagePaused] = useState<boolean[]>([])
+  const { startLoading, stopLoading } = useLoadingState('achievements')
 
   useEffect(() => {
     const fetchAchievements = async () => {
+      startLoading()
       try {
         const response = await fetch(
           `${ApiLink}?endpoint=achievements`
         )
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
         const data = await response.json()
 
         // Clean image URLs and convert Drive URLs to thumbnail format
@@ -38,8 +47,11 @@ const Achievements: React.FC = () => {
         setAchievementsData(formatted)
         setCurrentSlides(formatted.map(() => 0))
         setIsImagePaused(formatted.map(() => false))
+        stopLoading()
       } catch (error) {
-        console.error('Failed to fetch achievements, using fallback data:', error)
+        console.error('Failed to fetch achievements:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Failed to load achievements'
+        stopLoading(errorMessage)
         setCurrentSlides(siteContent.achievements.map(() => 0))
         setIsImagePaused(siteContent.achievements.map(() => false))
       } finally {

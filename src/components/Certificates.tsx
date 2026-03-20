@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import siteContent, { ApiLink } from '../content.config'
+import { useLoadingState } from '../contexts/LoadingContext'
 
 interface Certificate {
   title: string
@@ -18,13 +19,20 @@ const Certificates: React.FC = () => {
   const [certificates, setCertificates] = useState<Certificate[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
+  const { startLoading, stopLoading } = useLoadingState('certificates')
 
   useEffect(() => {
     const fetchCertificates = async () => {
+      startLoading()
       try {
         const response = await fetch(
            `${ApiLink}?endpoint=certificates`
         )
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
         const data = await response.json()
 
         // Format dates from ISO to DD/MM/YYYY
@@ -34,8 +42,11 @@ const Certificates: React.FC = () => {
         }))
 
         setCertificates(formattedData)
+        stopLoading()
       } catch (error) {
-        console.error('Failed to fetch certificates, using fallback data:', error)
+        console.error('Failed to fetch certificates:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Failed to load certificates'
+        stopLoading(errorMessage)
         setCertificates(siteContent.certificates)
       } finally {
         setLoading(false)

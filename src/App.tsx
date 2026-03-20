@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from 'react'
 import Hero from './components/Hero'
 import About from './components/About'
-import Education from './components/Education' // Uncommented this
+import Education from './components/Education'
 // import SoftSkills from './components/SoftSkills'
 import Skills from './components/Skills'
 import Achievements from './components/Achievements'
@@ -11,11 +11,14 @@ import Projects from './components/Projects'
 import Services from './components/Services'
 import Certificates from './components/Certificates'
 import Contact from './components/Contact'
+import LoadingOverlay from './components/LoadingOverlay'
+import { LoadingProvider, useLoading } from './contexts/LoadingContext'
 import siteContent from './content.config'
 
-const sections = ['home', 'about', 'education', /*'soft-skills',*/ 'skills', 'projects', /*'ratings',*/ 'services', 'achievements', 'certificates', 'contact']
+const sections = ['home', 'about', 'education', /*'soft-skills',*/ 'skills', 'projects', /*'ratings',*/ 'services', /*'achievements', 'certificates',*/ 'contact']
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
+  const { isGlobalLoading, globalError, retry } = useLoading()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [isScrolled, setIsScrolled] = useState(false) // New state for scrolled
@@ -149,7 +152,8 @@ const App: React.FC = () => {
 
   return (
     <div className="app-shell">
-      
+      <LoadingOverlay isLoading={isGlobalLoading} error={globalError} onRetry={retry} />
+
       <div className="back-light">
         <div className="back-light__blob back-light__blob--1" />
         <div className="back-light__blob back-light__blob--2" />
@@ -242,6 +246,14 @@ const App: React.FC = () => {
         <i className="fas fa-arrow-up"></i>
       </button>
     </div>
+  )
+}
+
+const App: React.FC = () => {
+  return (
+    <LoadingProvider>
+      <AppContent />
+    </LoadingProvider>
   )
 }
 
