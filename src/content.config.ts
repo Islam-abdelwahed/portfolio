@@ -277,7 +277,7 @@ const siteContent: SiteContent = {
       description:
         "Distributed real-time surveillance system with AI-powered edge devices and scalable backend processing.",
       stack: ["Node.js", "TypeScript", "MongoDB", "Redis", "BullMQ"],
-      image: "images/project.jpg",
+      image: "./project.jpg",
       imageAlt: "AI Surveillance System",
       demoLink: "",
       githubRepo: "",
@@ -288,7 +288,7 @@ const siteContent: SiteContent = {
       description:
         "Distributed real-time surveillance system with AI-powered edge devices and scalable backend processing.",
       stack: ["Node.js", "TypeScript", "MongoDB", "Redis", "BullMQ"],
-      image: "images/project.jpg",
+      image: "./project.jpg",
       imageAlt: "AI Surveillance System",
       demoLink: "",
       githubRepo: "",
@@ -374,8 +374,8 @@ const siteContent: SiteContent = {
       highlight: "Global Hackathon",
       icon: "🚀",
       images: [
-        "images/achievement.png",
-        "images/achievement.jpg"
+        "./achievement.png",
+        "./achievement.jpg"
       ]
     },
     {
@@ -385,8 +385,8 @@ const siteContent: SiteContent = {
       highlight: "Global Hackathon",
       icon: "🚀",
       images: [
-        "images/achievement.png",
-        "images/achievement.jpg"
+        "./achievement.png",
+        "./achievement.jpg"
       ]
     },
 

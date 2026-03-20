@@ -1,6 +1,6 @@
 // src/contexts/LoadingContext.tsx
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react'
-
+import React, { createContext, useContext, useState, useCallback } from 'react'
+import type { ReactNode } from 'react';
 interface LoadingContextType {
   registerLoader: (key: string) => void
   unregisterLoader: (key: string, error?: string) => void
@@ -14,7 +14,7 @@ const LoadingContext = createContext<LoadingContextType | undefined>(undefined)
 export const LoadingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [loaders, setLoaders] = useState<Set<string>>(new Set())
   const [errors, setErrors] = useState<Map<string, string>>(new Map())
-  const [retryTrigger, setRetryTrigger] = useState(0)
+  const [, setRetryTrigger] = useState(0)
 
   const registerLoader = useCallback((key: string) => {
     setLoaders(prev => new Set(prev).add(key))

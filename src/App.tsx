@@ -166,7 +166,7 @@ const AppContent: React.FC = () => {
       <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`} id="header">
         <nav className="nav__bar">
           <a href="#home" className="nav__logo">
-            <span className="nav__logo-text">IE .</span>
+            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Logo" className="nav__logo-img" />
           </a>
           <button className="nav__toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <i className={isMenuOpen ? 'fas fa-times' : 'fas fa-bars'}></i>

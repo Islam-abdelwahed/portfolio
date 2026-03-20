@@ -95,7 +95,7 @@ const Hero: React.FC = () => {
           <div className="hero__image-wrap animate-in" id="hero-photo-wrap">
             <div className="hero__image-3d" id="hero-image-3d">
               <div className="hero__image-frame">
-                <img src="images/formal.jpg" alt={hero.imageAlt} className="hero__image photo-transition-img" id="hero-photo" />
+                <img src={`${import.meta.env.BASE_URL}images/formal.jpg`} alt={hero.imageAlt} className="hero__image photo-transition-img" id="hero-photo" />
                 <div className="floating-icons" data-floating-icons="hero" aria-hidden="true"></div>
               </div>
             </div>
